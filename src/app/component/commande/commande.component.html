@@ -1,0 +1,40 @@
+<div class=" text-center" style="background-color: #f2f2f2; padding: 10px;">
+  <div class="container">
+  <h3>VOTRE COMMANDE</h3>
+
+  <table>
+    <thead class="table text-center">
+      <tr>
+        <th scope="col">PRODUITS</th>
+        <th scope="col">QUANTITÉ</th>
+        <th scope="col">PRIX UNITAIRE</th>
+        <th scope="col">PRIX</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let uneLigne of getPanier()">
+        <td>{{uneLigne.box.nom}}</td>
+        <td> <button (click)="suppressionPanier(uneLigne.box)" class="bi-dash-circle rounded" data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop" style="background-color:#8B0000;"></button> {{uneLigne.quantite}} <button
+            (click)="ajoutPanier(uneLigne.box)" type="button" class="bi-plus-circle rounded" data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop" style="background-color:#006400;"></button> </td>
+        <td>{{uneLigne.box.prix.toFixed(1)}}</td>
+        <td>{{(uneLigne.box.prix * uneLigne.quantite).toFixed(1)}} €</td>
+      </tr>
+  </table>
+
+
+  <h3>TOTAL TTC : {{getTotal().toFixed(1)}} €</h3>
+  <div class="conteneur-boutons">
+  <button (click)="deleteAll()" class="bi bi-x-circle-fill rounded" data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop">
+    Annuler la commande
+  </button>
+
+  <button (click)="ajouterCommande()" class="bi bi-credit-card-fill rounded" data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"> Mon Panier
+    </button>
+    </div>
+  </div>
+</div>

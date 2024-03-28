@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-4" *ngFor="let box of boxes">
+      <div class="card mb-4">
+
+        <img [src]="'http://localhost:8080/api/image/' + box.image" class="card-img-top clickable-image"
+          data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="onDetail(box)">
+
+        <div class="card-body">
+          <h5 class="card-title">Box {{ box.nom }}</h5>
+          <p class="card-text">Prix : {{ box.prix }} €</p>
+          <p class="card-text">Saveurs : {{ box.saveurs }}</p>
+
+          <div class="conteneur-boutons">
+          <!-- Bouton de suppression des boxs -->
+          <button (click)="suppressionPanier(box)" class="bi bi-dash-circle rounded" data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop" style="background-color:#8B0000;"></button>
+
+          <!-- Bouton d'ajout des boxs -->
+          <button (click)="ajoutPanier(box)" type="button" class="bi bi-plus-circle rounded" data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop" style="background-color:#006400;"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{boxeDetail?.nom}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p *ngFor="let aliment of boxeDetail?.aliments" class="card-text">{{ aliment.quantite }} {{ aliment.nom }}
+        </p>
+        <img [src]="'http://localhost:8080/api/image/' + boxeDetail?.image" class="card-img-top">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-commande></app-commande>

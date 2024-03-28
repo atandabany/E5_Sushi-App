@@ -1,0 +1,24 @@
+<div style="text-align: center;">
+    <h3>Merci pour votre commande</h3>
+    <p> A bientôt chez Sushi Shop !</p>
+</div>
+
+<h3 style="text-align: center;"> Historique de vos précédentes commandes :</h3>
+
+<style>
+    .centered-content {
+      text-align: center;
+    }
+  </style>
+  
+  <div class="centered-content">
+    <div *ngFor="let commande of getCommande()">
+      Commande :
+      <ul style="text-align: center;">
+        <p *ngFor="let ligne of commande.commande">
+          Box : {{ ligne.box.nom }} {{ ligne.box.prix }} € X {{ ligne.quantite }}
+      </p>
+      </ul>
+    </div>
+  </div>
+  

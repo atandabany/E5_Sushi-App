@@ -1,0 +1,15 @@
+.ds{
+    border-image: 100%;
+}
+
+button.bi {
+    font-size: 20px;
+    padding: 10px 20px;
+}
+
+.conteneur-boutons {
+    display: flex;
+    justify-content: center; /* Centrer horizontalement */
+    gap: 10px; /* Espace entre les boutons */
+  }
+  
