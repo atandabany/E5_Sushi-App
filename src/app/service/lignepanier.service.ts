@@ -38,38 +38,48 @@ export class LignepanierService {
     localStorage.setItem("panier",JSON.stringify(this.lesPaniers))
   }
 
+  // Méthode pour supprimer une ligne du panier
   public deleteLigne(uneBox: Box, qte: number) {
-    let estPresent = false
-    let laLigne:undefined | LignePanier
+    let estPresent = false // Variable pour suivre si la boîte est présente dans le panier
+    let laLigne:undefined | LignePanier // Variable pour stocker la ligne du panier à supprimer
+    // Parcours de toutes les lignes du panier
     for (const uneLigne of this.lesPaniers) {
+      // Vérification si la boîte est présente dans la ligne du panier
       if (uneLigne.box.id == uneBox.id) {
-        estPresent = true
-        uneLigne.quantite -= qte
-        laLigne=uneLigne
+        estPresent = true // La boîte est présente dans le panier
+        uneLigne.quantite -= qte // Diminution de la quantité de la boîte dans la ligne du panier
+        laLigne=uneLigne // Sauvegarde de la ligne du panier pour une suppression éventuelle
       }
+      // Correction si la quantité devient négative
       if (uneLigne.quantite < 0) {
-        uneLigne.quantite = 0
+        uneLigne.quantite = 0 // La quantité ne peut pas être négative, donc on la fixe à zéro
       }
     }
+    // Suppression de la ligne du panier si elle n'a plus de quantité et qu'elle était présente dans le panier
     if (estPresent && laLigne!.quantite<=0){
-      let position= this.lesPaniers.indexOf(laLigne!)
-      this.lesPaniers.splice(position,1)
+      let position= this.lesPaniers.indexOf(laLigne!) // Trouver la position de la ligne dans le panier
+      this.lesPaniers.splice(position,1) // Supprimer la ligne du panier
     }
+    // Mise à jour du panier dans le stockage local après les modifications
     localStorage.setItem("panier",JSON.stringify(this.lesPaniers))   
   }
 
+  // Méthode pour calculer le total du panier
   public getTotalPanier(){
-    let resultat = 0
+    let resultat = 0 // Variable pour stocker le total du panier
+    // Parcours de toutes les lignes du panier
     for (const uneLigne of this.lesPaniers) {
+      // Ajout du prix de chaque boîte multiplié par sa quantité au total
       resultat += uneLigne.quantite * uneLigne.box.prix
     }
+    // Mise à jour du panier dans le stockage local après les modifications (peut-être inutile ici)
     localStorage.setItem("panier",JSON.stringify(this.lesPaniers))
-    return resultat
+    return resultat // Retourne le total du panier
   }
 
+  // Méthode pour vider le panier
   public clearAll(){
-    this.lesPaniers = []
-    localStorage.setItem("panier",JSON.stringify(this.lesPaniers))
+    this.lesPaniers = [] // Vide le tableau des lignes du panier
+    localStorage.setItem("panier",JSON.stringify(this.lesPaniers)) // Met à jour le stockage local avec le panier vidé
     }
   }
-

@@ -5,7 +5,6 @@ import { Box } from '../../models/Box';
 import { HistoriquecommandeService } from '../../service/historiquecommande.service';
 
 
-
 // Définition du composant CommandeComponent avec le décorateur Component
 @Component({
   selector: 'app-commande', // Sélecteur CSS utilisé pour identifier ce composant dans les fichiers HTML
@@ -22,15 +21,16 @@ export class CommandeComponent {
 
   // Méthode pour récupérer le panier depuis le service LignepanierService
   getPanier(){
-    return this.panierService.getLignePanier() // Appel de la méthode getLignePanier() du service
+    return this.panierService.getLignePanier() // Appel de la méthode getLignePanier() du service LignepanierService
   }
-
+  
+  // Méthode pour calculer le total du panier depuis le service LignepanierService
   getTotal(){
-    return this.panierService.getTotalPanier()
+    return this.panierService.getTotalPanier() // Appel de la méthode getTotalPanier() du service LignepanierService
   }
 
   deleteAll() {
-    return this.panierService.clearAll()
+    return this.panierService.clearAll() // Appel de la méthode clearAll() du service LignepanierService
   }
 
   ajoutPanier(box: Box) {
@@ -38,13 +38,13 @@ export class CommandeComponent {
   }
 
   suppressionPanier(box: Box) {
-    this.panierService.deleteLigne(box, 1)
+    this.panierService.deleteLigne(box, 1) // Appel de la méthode deleteLigne du service
 
   }
   ajouterCommande(){
-    console.log(this.getPanier())
-     this.historiqueService.addCommande(this.getPanier())
-     location.href="/panier"
+    console.log(this.getPanier()) // Affiche le contenu du panier dans la console
+     this.historiqueService.addCommande(this.getPanier()) // Ajoute une commande à l'historique en utilisant le contenu du panier
+     location.href="/panier" // Redirige vers la page du panier
   }
 
 }

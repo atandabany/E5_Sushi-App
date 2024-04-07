@@ -44,7 +44,8 @@ export class CarteComponent {
     this.panierService.addLigne(box, 1) // Appel de la méthode addLigne du service LignepanierService pour ajouter une ligne au panier
   }
 
+  // Méthode appelée lorsqu'une boite est supprimée du panier
   suppressionPanier(box: Box) {
-    this.panierService.deleteLigne(box, 1)
+    this.panierService.deleteLigne(box, 1) // Appel de la méthode deleteLigne du service LignepanierService pour supprimer une ligne du panier
   }
 }

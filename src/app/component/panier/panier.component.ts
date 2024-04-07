@@ -10,6 +10,7 @@ export class PanierComponent {
   constructor(private historiqueCdeService: HistoriquecommandeService){
   }
   getCommande(){
-    return this.historiqueCdeService.getLigneCommande()
+    return this.historiqueCdeService.getLigneCommande()  // Appel de la méthode getLigneCommande() du service historiquecommande pour récupérer les commandes
+
   }
 }
