@@ -47,4 +47,18 @@ export class CommandeComponent {
      location.href="/panier" // Redirige vers la page du panier
   }
 
+
+  getTotalPromo(){
+    return this.panierService.getTotalPanierAvecPromotion()
+
+  }
+
+  getSaveur(){
+    return this.panierService.saveursList()
+  }
+
+
+  
+  
+
 }

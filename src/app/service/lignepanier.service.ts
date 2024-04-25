@@ -35,20 +35,20 @@ export class LignepanierService {
     if (estPresent == false) { // Si la box n'est pas déjà présente dans le panier
       this.lesPaniers.push(ligne) // Ajoute la nouvelle ligne de panier au tableau
     }
-    localStorage.setItem("panier",JSON.stringify(this.lesPaniers))
+    localStorage.setItem("panier", JSON.stringify(this.lesPaniers))
   }
 
   // Méthode pour supprimer une ligne du panier
   public deleteLigne(uneBox: Box, qte: number) {
     let estPresent = false // Variable pour suivre si la boîte est présente dans le panier
-    let laLigne:undefined | LignePanier // Variable pour stocker la ligne du panier à supprimer
+    let laLigne: undefined | LignePanier // Variable pour stocker la ligne du panier à supprimer
     // Parcours de toutes les lignes du panier
     for (const uneLigne of this.lesPaniers) {
       // Vérification si la boîte est présente dans la ligne du panier
       if (uneLigne.box.id == uneBox.id) {
         estPresent = true // La boîte est présente dans le panier
         uneLigne.quantite -= qte // Diminution de la quantité de la boîte dans la ligne du panier
-        laLigne=uneLigne // Sauvegarde de la ligne du panier pour une suppression éventuelle
+        laLigne = uneLigne // Sauvegarde de la ligne du panier pour une suppression éventuelle
       }
       // Correction si la quantité devient négative
       if (uneLigne.quantite < 0) {
@@ -56,16 +56,16 @@ export class LignepanierService {
       }
     }
     // Suppression de la ligne du panier si elle n'a plus de quantité et qu'elle était présente dans le panier
-    if (estPresent && laLigne!.quantite<=0){
-      let position= this.lesPaniers.indexOf(laLigne!) // Trouver la position de la ligne dans le panier
-      this.lesPaniers.splice(position,1) // Supprimer la ligne du panier
+    if (estPresent && laLigne!.quantite <= 0) {
+      let position = this.lesPaniers.indexOf(laLigne!) // Trouver la position de la ligne dans le panier
+      this.lesPaniers.splice(position, 1) // Supprimer la ligne du panier
     }
     // Mise à jour du panier dans le stockage local après les modifications
-    localStorage.setItem("panier",JSON.stringify(this.lesPaniers))   
+    localStorage.setItem("panier", JSON.stringify(this.lesPaniers))
   }
 
   // Méthode pour calculer le total du panier
-  public getTotalPanier(){
+  public getTotalPanier() {
     let resultat = 0 // Variable pour stocker le total du panier
     // Parcours de toutes les lignes du panier
     for (const uneLigne of this.lesPaniers) {
@@ -73,13 +73,57 @@ export class LignepanierService {
       resultat += uneLigne.quantite * uneLigne.box.prix
     }
     // Mise à jour du panier dans le stockage local après les modifications (peut-être inutile ici)
-    localStorage.setItem("panier",JSON.stringify(this.lesPaniers))
+    localStorage.setItem("panier", JSON.stringify(this.lesPaniers))
     return resultat // Retourne le total du panier
   }
 
   // Méthode pour vider le panier
-  public clearAll(){
+  public clearAll() {
     this.lesPaniers = [] // Vide le tableau des lignes du panier
-    localStorage.setItem("panier",JSON.stringify(this.lesPaniers)) // Met à jour le stockage local avec le panier vidé
-    }
+    localStorage.setItem("panier", JSON.stringify(this.lesPaniers)) // Met à jour le stockage local avec le panier vidé
   }
+
+
+  // Méthode pour calculer le total du panier en prenant en compte l'offre promotionnelle
+  public getTotalPanierAvecPromotion() {
+    let montantMinimum = 30; // Montant minimum du panier pour que l'offre s'applique
+    let totalAvecPromotion = 0; // Variable pour stocker le total du panier avec la promotion
+
+    // Calcul du total du panier sans promotion
+    let totalSansPromotion = this.getTotalPanier();
+
+    // Initialisation du prix de la box la moins chère à un montant supérieur à tout prix possible dans le panier
+    let prixBoxLaMoinsChere = 99999;
+
+    // Recherche du prix de la box la moins chère dans le panier
+    for (const uneLigne of this.lesPaniers) {
+      if (uneLigne.box.prix < prixBoxLaMoinsChere) {
+        prixBoxLaMoinsChere = uneLigne.box.prix;
+      }
+    }
+
+    // Si le total du panier sans promotion dépasse le montant minimum requis
+    if (totalSansPromotion >= montantMinimum) {
+      // Soustraction du prix de la box la moins chère du total du panier
+      totalAvecPromotion = totalSansPromotion - prixBoxLaMoinsChere;
+    } else {
+      totalAvecPromotion = totalSansPromotion; // Si le montant total du panier est inférieur au montant minimum, pas de promotion
+    }
+
+    return totalAvecPromotion; // Retourne le total du panier avec la promotion
+  }
+
+  public saveursList() {
+    let listSaveurs:any = []
+    for (let unElement of this.lesPaniers){
+      for (let saveur of unElement.box.saveurs){
+        if (!(listSaveurs.includes(saveur))){
+          listSaveurs.push(saveur)
+        }
+      }
+    }
+    return listSaveurs.length
+  }
+  
+  
+}

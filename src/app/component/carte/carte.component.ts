@@ -25,7 +25,7 @@ export class CarteComponent {
 
     // Appel de la méthode getBox() du service BoxService pour récupérer les données des boîtes
     this.boxService.getBox().subscribe((data) => {
-      
+
       // Transformation des données récupérées en instances de Box et ajout au tableau boxes
       let resultats = Box.transformArray(data)
       this.boxes.push(...resultats) // Ajout des instances de Box au tableau boxes
@@ -48,4 +48,18 @@ export class CarteComponent {
   suppressionPanier(box: Box) {
     this.panierService.deleteLigne(box, 1) // Appel de la méthode deleteLigne du service LignepanierService pour supprimer une ligne du panier
   }
+
+  calculerMoyennePrix() {
+    let total = 0;
+    // Parcourt chaque box dans le tableau
+    for (let box of this.boxes) {
+      // Ajoute le prix de chaque box à la somme totale
+      total += box.prix;
+    }
+    // Calcule la moyenne en divisant la somme totale par le nombre de boxes
+    let moyenne = total / this.boxes.length;
+    // Retourne la moyenne calculée
+    return moyenne;
+  }
+
 }

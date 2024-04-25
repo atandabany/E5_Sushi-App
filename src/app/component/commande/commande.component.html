@@ -31,6 +31,10 @@
 
 
     <h3>TOTAL TTC : {{getTotal().toFixed(1)}} €</h3>
+    <h3>TOTAL AVEC PROMOTION : {{getTotalPromo().toFixed(1)}} €</h3>
+    <h3>TOTAL SAVEURS : {{getSaveur()}}</h3>
+   
+
     <div class="conteneur-boutons">
       <button (click)="deleteAll()" class="bi bi-x-circle-fill rounded" data-bs-toggle="modal"
         data-bs-target="#staticBackdrop">

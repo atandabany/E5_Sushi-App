@@ -19,4 +19,5 @@ export class BoxService {
     // L'URL de l'API est récupérée à partir de l'environnement de développement
     return this.http.get(environment.apiBaseUrl);
   }
+ 
 }
